@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\BillController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Middleware\UserRole;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
