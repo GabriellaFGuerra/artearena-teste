@@ -9,19 +9,11 @@ use Illuminate\Auth\Access\Response;
 class BillPolicy
 {
     /**
-     * Determine whether the user can view any models.
-     */
-    public function viewAny(User $user): bool
-    {
-        //
-    }
-
-    /**
      * Determine whether the user can view the model.
      */
     public function view(User $user, Bill $bill): bool
     {
-        //
+        return $user->id === $bill->user_id ||  $user->role === 'admin';
     }
 
     /**
@@ -29,7 +21,7 @@ class BillPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -37,7 +29,7 @@ class BillPolicy
      */
     public function update(User $user, Bill $bill): bool
     {
-        //
+        return $user->id === $bill->user_id ||  $user->role === 'admin';
     }
 
     /**
@@ -45,22 +37,6 @@ class BillPolicy
      */
     public function delete(User $user, Bill $bill): bool
     {
-        //
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, Bill $bill): bool
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, Bill $bill): bool
-    {
-        //
+        return $user->id === $bill->user_id ||  $user->role === 'admin';
     }
 }
