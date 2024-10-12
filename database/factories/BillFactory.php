@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,7 +21,7 @@ class BillFactory extends Factory
             'title' => fake()->sentence(),
             'description' => fake()->sentence(),
             'amount' => fake()->numberBetween(100, 1000),
-            'due_date' => fake()->dateTimeBetween('now', '+1 year')->format('date'),
+            'due_date' => Carbon::now()->addDays(rand(1, 60))->format('Y-m-d'),
             'status' => fake()->randomElement(['pending', 'paid']),
         ];
     }

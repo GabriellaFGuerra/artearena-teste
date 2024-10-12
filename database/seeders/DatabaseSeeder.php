@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         User::factory(5)->create()->each(function ($user) {
-            Bill::factory(5)->create([
+            Bill::factory(rand(1, 5))->create([
                 'user_id' => $user->id
             ]);
         });
