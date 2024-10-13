@@ -3,6 +3,7 @@
 use App\Http\Controllers\BillController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -16,6 +17,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/bills', BillController::class);
     Route::get('/search-users', [UserController::class, 'searchUsers'])->name('users.search');
+    Route::get('/admin/reports/bills', [ReportController::class, 'generateReport'])->name('bills.report');
 });
 
 require __DIR__ . '/auth.php';
