@@ -107,102 +107,122 @@
                             </svg>
                             Adicionar conta
                         </a>
-                    </div>
 
-                    <div class="overflow-x-auto relative">
-                        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                            <thead
-                                class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                                <tr>
-                                    <th scope="col" class="px-6 py-3 cursor-pointer" @click="setSort('due_date')">
-                                        Vencimento
-                                        <span x-show="sortColumn === 'due_date'">
-                                            <span x-show="sortDirection === 'asc'">&uarr;</span>
-                                            <span x-show="sortDirection === 'desc'">&darr;</span>
-                                        </span>
-                                    </th>
-                                    <th scope="col" class="px-6 py-3 cursor-pointer" @click="setSort('title')">
-                                        Conta
-                                        <span x-show="sortColumn === 'title'">
-                                            <span x-show="sortDirection === 'asc'">&uarr;</span>
-                                            <span x-show="sortDirection === 'desc'">&darr;</span>
-                                        </span>
-                                    </th>
-                                    <th scope="col" class="px-6 py-3 cursor-pointer" @click="setSort('description')">
-                                        Descrição
-                                        <span x-show="sortColumn === 'description'">
-                                            <span x-show="sortDirection === 'asc'">&uarr;</span>
-                                            <span x-show="sortDirection === 'desc'">&darr;</span>
-                                        </span>
-                                    </th>
-                                    <th scope="col" class="px-6 py-3 cursor-pointer" @click="setSort('amount')">
-                                        Valor
-                                        <span x-show="sortColumn === 'amount'">
-                                            <span x-show="sortDirection === 'asc'">&uarr;</span>
-                                            <span x-show="sortDirection === 'desc'">&darr;</span>
-                                        </span>
-                                    </th>
-                                    <th scope="col" class="px-6 py-3 cursor-pointer" @click="setSort('user')">
-                                        Usuário
-                                        <span x-show="sortColumn === 'user'">
-                                            <span x-show="sortDirection === 'asc'">&uarr;</span>
-                                            <span x-show="sortDirection === 'desc'">&darr;</span>
-                                        </span>
-                                    </th>
-                                    <th scope="col" class="px-6 py-3 cursor-pointer" @click="setSort('status')">
-                                        Status
-                                        <span x-show="sortColumn === 'status'">
-                                            <span x-show="sortDirection === 'asc'">&uarr;</span>
-                                            <span x-show="sortDirection === 'desc'">&darr;</span>
-                                        </span>
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">Ações</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <template x-for="bill in paginatedBills" :key="bill.id">
-                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                        <td class="px-6 py-4"
-                                            x-text="new Date(bill.due_date).toLocaleDateString('pt-BR')"></td>
-                                        <td class="px-6 py-4" x-text="bill.title"></td>
-                                        <td class="px-6 py-4" x-text="bill.description"></td>
-                                        <td class="px-6 py-4" x-text="bill.amount"></td>
-                                        <td class="px-6 py-4" x-text="bill.user ? bill.user.name : 'N/A'"></td>
-                                        <td class="px-6 py-4" x-text="bill.status === 'paid' ? 'Pago' : 'Pendente'">
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            <div class="flex space-x-2">
-                                                <x-secondary-button x-bind:href="`/bills/${bill.id}/edit`">
-                                                    Editar
-                                                </x-secondary-button>
-                                                <form x-bind:action="`/bills/${bill.id}`" method="POST" class="inline">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <x-danger-button type="submit">
-                                                        Deletar
-                                                    </x-danger-button>
-                                                </form>
-                                            </div>
-                                        </td>
+                        @if (Auth::user()->isAdmin())
+                            <a href="{{ route('bills.report') }}"
+                                class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center">
+                                <svg class="w-5 h-5 mr-2 -ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h10a2 2 0 012 2v12a2 2 0 01-2 2h-7z" />
+                                </svg>
+                                Gerar relatório
+                            </a>
+                        @endif
+
+
+                        <div class="overflow-x-auto relative">
+                            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                                <thead
+                                    class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3 cursor-pointer"
+                                            @click="setSort('due_date')">
+                                            Vencimento
+                                            <span x-show="sortColumn === 'due_date'">
+                                                <span x-show="sortDirection === 'asc'">&uarr;</span>
+                                                <span x-show="sortDirection === 'desc'">&darr;</span>
+                                            </span>
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 cursor-pointer" @click="setSort('title')">
+                                            Conta
+                                            <span x-show="sortColumn === 'title'">
+                                                <span x-show="sortDirection === 'asc'">&uarr;</span>
+                                                <span x-show="sortDirection === 'desc'">&darr;</span>
+                                            </span>
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 cursor-pointer"
+                                            @click="setSort('description')">
+                                            Descrição
+                                            <span x-show="sortColumn === 'description'">
+                                                <span x-show="sortDirection === 'asc'">&uarr;</span>
+                                                <span x-show="sortDirection === 'desc'">&darr;</span>
+                                            </span>
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 cursor-pointer" @click="setSort('amount')">
+                                            Valor
+                                            <span x-show="sortColumn === 'amount'">
+                                                <span x-show="sortDirection === 'asc'">&uarr;</span>
+                                                <span x-show="sortDirection === 'desc'">&darr;</span>
+                                            </span>
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 cursor-pointer" @click="setSort('user')">
+                                            Usuário
+                                            <span x-show="sortColumn === 'user'">
+                                                <span x-show="sortDirection === 'asc'">&uarr;</span>
+                                                <span x-show="sortDirection === 'desc'">&darr;</span>
+                                            </span>
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 cursor-pointer" @click="setSort('status')">
+                                            Status
+                                            <span x-show="sortColumn === 'status'">
+                                                <span x-show="sortDirection === 'asc'">&uarr;</span>
+                                                <span x-show="sortDirection === 'desc'">&darr;</span>
+                                            </span>
+                                        </th>
+                                        <th scope="col" class="px-6 py-3">Ações</th>
                                     </tr>
-                                </template>
-                            </tbody>
-                        </table>
-                    </div>
+                                </thead>
+                                <tbody>
+                                    <template x-for="bill in paginatedBills" :key="bill.id">
+                                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                            <td class="px-6 py-4"
+                                                x-text="(() => { 
+                                                            let date = new Date(bill.due_date); 
+                                                            date.setMinutes(date.getMinutes() + date.getTimezoneOffset()); 
+                                                            return date.toLocaleDateString('pt-BR'); 
+                                                        })()">
+                                            </td>
+                                            <td class="px-6 py-4" x-text="bill.title"></td>
+                                            <td class="px-6 py-4" x-text="bill.description"></td>
+                                            <td class="px-6 py-4" x-text="bill.amount"></td>
+                                            <td class="px-6 py-4" x-text="bill.user ? bill.user.name : 'N/A'"></td>
+                                            <td class="px-6 py-4" x-text="bill.status === 'paid' ? 'Pago' : 'Pendente'">
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                <div class="flex space-x-2">
+                                                    <x-secondary-button x-bind:href="`/bills/${bill.id}/edit`">
+                                                        Editar
+                                                    </x-secondary-button>
+                                                    <form x-bind:action="`/bills/${bill.id}`" method="POST"
+                                                        class="inline">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <x-danger-button type="submit">
+                                                            Deletar
+                                                        </x-danger-button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </template>
+                                </tbody>
+                            </table>
+                        </div>
 
-                    <div class="mt-4 flex justify-between items-center">
-                        <button @click="prevPage" :disabled="currentPage === 1"
-                            class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md disabled:opacity-50">
-                            Previous
-                        </button>
-                        <span>Page <span x-text="currentPage"></span> of <span x-text="totalPages"></span></span>
-                        <button @click="nextPage" :disabled="currentPage === totalPages"
-                            class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md disabled:opacity-50">
-                            Next
-                        </button>
+                        <div class="mt-4 flex justify-between items-center">
+                            <button @click="prevPage" :disabled="currentPage === 1"
+                                class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md disabled:opacity-50">
+                                Previous
+                            </button>
+                            <span>Page <span x-text="currentPage"></span> of <span x-text="totalPages"></span></span>
+                            <button @click="nextPage" :disabled="currentPage === totalPages"
+                                class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md disabled:opacity-50">
+                                Next
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 </x-app-layout>
