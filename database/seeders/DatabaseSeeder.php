@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use App\Models\Bill;
 
 class DatabaseSeeder extends Seeder
@@ -19,5 +21,13 @@ class DatabaseSeeder extends Seeder
                 'user_id' => $user->id
             ]);
         });
+
+        User::create([
+            'name' => 'Admin',
+            'email' => 'admin@mail.com',
+            'email_verified_at' => now(),
+            'password' => Hash::make('password'),
+            'remember_token' => Str::random(10),
+        ]);
     }
 }
