@@ -66,7 +66,7 @@
                         <div class="grid grid-cols-1">
                             <x-input-label for="user_id" :value="__('Usuário')" class="mb-2" />
                             <x-text-input type="text" id="user_search" name="user_search" class="block w-full mt-1"
-                                x-model="searchQuery" @input="fetchUsers" placeholder="Search for a user..." />
+                                x-model="searchQuery" @input="fetchUsers" placeholder="Pesquisar usuário..." />
                             <x-select-input class="block w-full mt-1" id="user_id" name="user_id"
                                 x-model="selectedUserId">
                                 <option value="" disabled selected>Selecione um usuário</option>
