@@ -81,16 +81,8 @@ php artisan test
 
 **tests/Feature**: Testes de funcionalidade.
 
-### Páginas
+## Link
 
-1. Login: `/login`
+O projeto está disponível para teste em [Contas a Pagar](web-service-production-9f2b.up.railway.app)
 
-2. Cadastro: `/register`
-
-3. Contas: `/bills`
-
-4. Adicionar Conta: `/bills/create`
-
-5. Editar Conta: `/bills/{$id}/edit`
-
-6. Gerar relatório de contas: `/admin/reports/bills`
+-   O login de Admin é `admin@mail.com` e a senha é `password`
