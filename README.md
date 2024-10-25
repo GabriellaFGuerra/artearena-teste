@@ -81,8 +81,3 @@ php artisan test
 
 **tests/Feature**: Testes de funcionalidade.
 
-## Link
-
-O projeto está disponível para teste em [Contas a Pagar](https://web-service-production-9f2b.up.railway.app)
-
--   O login de Admin é `admin@mail.com` e a senha é `password`
